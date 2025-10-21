@@ -309,10 +309,8 @@ def callFunction(x_values, y_start,random_number_range, spline_value, vocab_size
         case 3:
             return generate_noisy_data_periodic(x_values, vocab_size,noise_std)
         case 4:
-            return generate_noisy_data_distance(x_values, y_start,random_number_range, spline_value, vocab_size,noise_std)
-        case 5:
             return generate_noisy_data_periodic_sum(x_values,vocab_size,noise_std)
-        case 6:
+        case 5:
             return generate_discontinous_timeseries(x_values, y_start,random_number_range, spline_value, vocab_size,noise_std)
-        case 7:
+        case 6:
             return generate_discontinous_timeseries2(x_values, y_start,random_number_range, spline_value, vocab_size,noise_std)

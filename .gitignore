@@ -20,6 +20,6 @@ dist/
 build/
 
 #images
-*.svg
-*.png
-*.pkl
+# *.svg
+# *.png
+# *.pkl

@@ -5,12 +5,13 @@ import pandas as pd
 
 
 def round_numbers_individually(num_intervalls: int, time_series: torch.Tensor):
+    function_timeseries = time_series
     smallest_number = 1/num_intervalls
     exp = calc_exp(smallest_number)
     lower_rounding_border = 0.5 * smallest_number
-    time_series.apply_(lambda x: handle_single_number(x, smallest_number, lower_rounding_border, exp))
+    function_timeseries.apply_(lambda x: handle_single_number(x, smallest_number, lower_rounding_border, exp))
 
-    return time_series
+    return function_timeseries
 
 def handle_single_number(number: float, smallest_number: float, lower_rounding_border:float, exp: int):
     smallest_number = smallest_number * (10**exp)
@@ -120,7 +121,7 @@ def remove_parts_of_graph_encoder(x_array, y_array, width_array, offset, x_lim):
     '''
     df = pd.DataFrame({'x_array': x_array, 'y_array': y_array, 'mask':0})
     location_width = pd.DataFrame(columns=['location', 'width', 'min_max_value'])
-    count_width = randint(0,width_array[2]) #create random number of interpolation intervals
+    count_width = randint(3,width_array[2]) #create random number of interpolation intervals
     min_width = width_array[0]  #minimal width of an interpolation interval
     max_width = width_array[1]  #maximal width of an interpolation interval
 
@@ -174,6 +175,9 @@ def remove_parts_of_graph_encoder(x_array, y_array, width_array, offset, x_lim):
 
         #update mask values for interpolation intervals to 1
         df.loc[(df['x_array'] >= location - width) & (df['x_array'] <= location + width),'mask'] = 1
+    
+    df.iloc[:offset, df.columns.get_loc("mask")] = 0
+    df.iloc[-offset:, df.columns.get_loc("mask")]= 0
 
 
     return df['mask']
